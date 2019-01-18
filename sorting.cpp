@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include <algorithm>
+
 /*
  * In this file, we'll work on sorting an array of these student structures.
  */
@@ -39,6 +41,14 @@ const float GPAS[N_STUDENTS] = {
   4.0
 };
 
+bool cmp_students_asc_gpa(const struct student& s1, const struct student& s2) {
+  return (s1.gpa < s2.gpa);
+}
+
+bool cmp_students_desc_gpa(const struct student& s1, const struct student& s2) {
+  return (s1.gpa > s2.gpa);
+}
+
 int main(int argc, char const *argv[]) {
   /*
    * Here, we're dynamically allocating and initializing an array of students.
@@ -49,6 +59,21 @@ int main(int argc, char const *argv[]) {
     students[i].gpa = GPAS[i];
     std::cout << students[i].name << "\t\t" << students[i].gpa << std::endl;
   }
+
+  /*
+   * We'll sort the students here.
+   */
+  std::sort(students, students + N_STUDENTS, cmp_students_desc_gpa);
+
+  /*
+   * Now when we print the students, they're in sorted order.
+   */
+  std::cout << std::endl << std::endl;
+  for (int i = 0; i < N_STUDENTS; i++) {
+    std::cout << students[i].name << "\t\t" << students[i].gpa << std::endl;
+  }
+
+  delete[] students;
 
   return 0;
 }
